@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+	<!-- 
+
+	<statement id="insertTestTbl" parameterClass="java.util.Map">
+		INSERT INTO test_tbl (
+			test_num,
+			test_name,
+			update_time
+		) VALUES (
+			#testNum#,
+			#testName#,
+			now()
+		)
+	</statement>
+
+	<statement id="insertSampleTbl" parameterClass="java.util.Map">
+		INSERT INTO sample_tbl (
+			sample_num,
+			sample_name,
+			update_time
+		) VALUES (
+			#sampleNum#,
+			#sampleName#,
+			now()
+		)
+	</statement>
+	
+	<statement id="selectSampleTbl"  parameterClass="java.util.Map"
+				resultClass="sample.bean.SampleTblBean">
+		SELECT
+			sample_id AS sampleId,
+			sample_num AS sampleNum,
+			sample_name AS sampleName,
+			update_time AS updateTime
+		FROM
+			sample_tbl
+	</statement>
+
+ -->
+ 
+
+<mapper namespace="sample.dao.ExampleDao">
+
+	<select id="selectTestTbl"  parameterType="java.util.Map" 
+		resultType="sample.bean.TestTblBean">
+		SELECT
+			test_id AS testId,
+			test_num AS testNum,
+			test_name AS testName,
+			update_time AS updateTime
+		FROM
+			test_tbl
+	</select>
+
+</mapper>

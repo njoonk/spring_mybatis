@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="project" default="deploy">
+
+    <description>sample peta api</description>
+
+    <target name="stopTomcat" description="To Stop Tomcat server">
+		<!-- Stop Tomcat -->
+    	<sshexec
+    		host="xxx.xxx.xxx.xxx"
+    		username="njoonk"
+			keyfile="id_rsa"
+			trust="true"
+    		command="source ~/.bash_profile;/usr/local/tomcat-api/bin/shutdown.sh" />
+    </target>
+
+    <target name="sendWarFile" description="Send war to tomcat server">
+
+		<!-- Copy the ROOT.war to the server -->
+    	<scp
+    		file="target/ROOT.war"
+    		todir="njoonk@xxx.xxx.xxx.xxx:"
+			keyfile="id_rsa"
+    		verbose="true"
+    		passphrase="" trust="true"/>
+
+		<!-- Delete the ROOT Folder -->
+    	<sshexec
+    		host="xxx.xxx.xxx.xxx"
+    		username="njoonk"
+			keyfile="id_rsa"
+			trust="true"
+    		command="rm -rf /usr/local/tomcat-api/webapps/ROOT /usr/local/tomcat-api/webapps/ROOT.war" />
+
+		<!-- Move the ROOT.war to the Webapp Folder -->
+    	<sshexec
+    		host="xxx.xxx.xxx.xxx"
+    		username="njoonk"
+			keyfile="id_rsa"
+			trust="true"
+    		command="mv ROOT.war /usr/local/tomcat-api/webapps/" />
+
+    </target>
+
+    <target name="startTomcat" description="To Start Tomcat server" depends="sendWarFile">
+		<!-- Start Tomcat -->
+    	<sshexec
+    		host="xxx.xxx.xxx.xxx"
+    		username="njoonk"
+			keyfile="id_rsa"
+			trust="true"
+    		command="source ~/.bash_profile;/usr/local/tomcat-api/bin/startup.sh" />
+    </target>
+
+    <target name="deploy" description="description">
+		<antcall target="stopTomcat"/>
+		<antcall target="startTomcat"/>
+    </target>
+
+</project>
